@@ -1,0 +1,141 @@
+/* --- GLOBALE NULSTILLINGER OG FULDBREDDE (ROBUST FIX) --- */
+
+/* Tvinger ALLE elementer til at inkludere padding og border i bredden */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Nulstiller margin/padding. overflow-x: hidden skal være på HTML/BODY */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    /* Sikrer at ingenting i det vandrette plan stikker ud */
+    overflow-x: hidden;
+}
+
+/* --- LAYOUT OG DESIGN --- */
+
+/* SIKRER CONTAINEREN ALDRIG ER STØRRE END VISNINGSOMRÅDET */
+.container {
+  width: 100vw; /* BRUGER 100% AF VISNINGSOMRÅDET (Viewport Width) */
+  max-width: 100%; /* Sikkerheds-margin */
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 5px;
+}
+
+/* Reducer overskriften */
+.container h1 {
+    font-size: 1.5rem;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* Statistik-tavlen */
+.stats-board {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 10px 5px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.stat-item h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.stat-item p {
+  font-size: 0.75rem;
+}
+
+/* Knap-layout */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  font-weight: bold;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Store knapper */
+.big-btn {
+  padding: 16px;
+  font-size: 1rem;
+  color: white;
+}
+
+/* --- FARVEOPSÆTNING --- */
+.save { background-color: #4CAF50; }
+.goal { background-color: #f44336; }
+.miss { background-color: #2196F3; }
+/* --- SLUT PÅ FARVEOPSÆTNING --- */
+
+/* Små fortryd knapper */
+.undo-small {
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Separator */
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Resultatsektion */
+.results {
+  background-color: #fff8dc;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.results h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+/* Reset knap */
+.reset {
+    background-color: #555;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    margin-top: 0;
+}
+
+/* Media Query (uændret) */
+@media (max-width: 350px) {
+  .big-btn {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+}
