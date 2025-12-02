@@ -1,28 +1,36 @@
 /* --- GLOBALE NULSTILLINGER OG FULDBREDDE (ROBUST FIX) --- */
 
-/* Tvinger ALLE elementer til at inkludere padding og border i bredden */
+/* Tvinger ALLE elementer til at inkludere padding og border i bredden/højden */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* Nulstiller margin/padding. overflow-x: hidden skal være på HTML/BODY */
+/* Nulstiller margin/padding og forhindrer vandret scrolling */
 body, html {
     margin: 0;
     padding: 0;
     background-color: #ffffff;
-    /* Sikrer at ingenting i det vandrette plan stikker ud */
     overflow-x: hidden;
+    overscroll-behavior-y: contain;
+
+    /* VIGTIGE ÆNDRINGER FOR HØJDE */
+    height: 100%; /* Sørger for at HTML/BODY fylder hele skærmen */
 }
 
 /* --- LAYOUT OG DESIGN --- */
 
-/* SIKRER CONTAINEREN ALDRIG ER STØRRE END VISNINGSOMRÅDET */
 .container {
-  width: 100vw; /* BRUGER 100% AF VISNINGSOMRÅDET (Viewport Width) */
-  max-width: 100%; /* Sikkerheds-margin */
+  width: 100vw;
+  max-width: 100%;
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 5px;
+
+  /* NYT: Tvinger containeren til at matche skærmhøjden */
+  min-height: 100vh;
+  /* Bruger flex for at placere indholdet pænt */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Reducer overskriften */
@@ -115,6 +123,12 @@ hr {
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.9rem;
+  /* Tillad plads til at vokse, hvis der er plads */
+  flex-grow: 1;
+  /* Centrerer vertikalt, hvis den vokser meget */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .results h3 {
