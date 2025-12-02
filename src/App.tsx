@@ -110,9 +110,6 @@ function App() {
         <p>
           Total effektivitet: <strong>{totalEfficiency.toFixed(1)}%</strong>
         </p>
-        <p style={{ fontSize: '0.8rem', color: '#666' }}>
-          Antal aktioner i alt: {totalAttempts}
-        </p>
       </div>
 
       <button className="btn reset" onClick={handleReset}>

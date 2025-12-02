@@ -11,10 +11,9 @@ body, html {
     padding: 0;
     background-color: #ffffff;
     overflow-x: hidden;
+    height: 100%;
+    /* Nyt: Deaktiverer iOS over-scrolling visuel effekt */
     overscroll-behavior-y: contain;
-
-    /* VIGTIGE ÆNDRINGER FOR HØJDE */
-    height: 100%; /* Sørger for at HTML/BODY fylder hele skærmen */
 }
 
 /* --- LAYOUT OG DESIGN --- */
@@ -25,10 +24,7 @@ body, html {
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 5px;
-
-  /* NYT: Tvinger containeren til at matche skærmhøjden */
   min-height: 100vh;
-  /* Bruger flex for at placere indholdet pænt */
   display: flex;
   flex-direction: column;
 }
@@ -115,26 +111,43 @@ hr {
     margin-bottom: 10px;
 }
 
-/* Resultatsektion */
+/* Resultatsektion (Statistik, Redningsprocent, Total Effektivitet) */
 .results {
   background-color: #fff8dc;
   padding: 8px;
   border-radius: 8px;
   margin-top: 5px;
   margin-bottom: 10px;
-  font-size: 0.9rem;
-  /* Tillad plads til at vokse, hvis der er plads */
+
+  /* Nødvendigt for at vokse og centrere indholdet */
   flex-grow: 1;
-  /* Centrerer vertikalt, hvis den vokser meget */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* CENTRERER INDHOLDET LODRET */
+
+  text-align: center; /* SIKRER CENTRERING AF TEKST */
 }
 
+/* Overskriften "Statistik" */
 .results h3 {
-    font-size: 1rem;
+    /* STØRRE SKRIFT */
+    font-size: 1.2rem;
+    font-weight: bold;
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* Selve procent-teksten */
+.results p {
+    /* STØRRE SKRIFT */
+    font-size: 1.15rem;
+    margin: 8px 0;
+}
+
+/* Procent-tallene (stærkt) */
+.results strong {
+    /* EKSTRA STORT TAL */
+    font-size: 1.5rem;
 }
 
 /* Reset knap */
