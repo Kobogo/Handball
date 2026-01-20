@@ -1,120 +1,64 @@
-import { useState, useEffect } from 'react'; // Importer useEffect
+import { useState } from 'react';
+import { usePreventRefresh } from './hooks/usePreventRefresh';
+import { useMatchStats } from './hooks/useMatchStats';
+import { StatsBoard } from './components/StatsBoard';
+import { ActionButtons } from './components/ActionButtons';
+import { MatchResults } from './components/MatchResults';
+import { Modal } from './components/Modal';
+import { Navbar } from './components/Navbar';
+import HistoryPage from './components/HistoryPage';
+import { useModal } from './hooks/useModal';
+import './components/Modal.css';
+import './components/Navbar.css';
 import './App.css';
 
-type Action = 'goal' | 'save' | 'miss';
-
 function App() {
-  const [history, setHistory] = useState<Action[]>([]);
+  usePreventRefresh();
+  const [currentView, setCurrentView] = useState<'tracker' | 'history'>('tracker');
+  const { isOpen, open, close } = useModal();
 
-  // --- NY EFFEKT TIL AT FORHINDRE TRÆK-NED OPFRISKNING ---
-  useEffect(() => {
-    let lastTouchY = 0; // Gemmer den lodrette position ved berøring
+  const {
+    stats, matchInfo, isQuickReset, isLoading, savePercentage,
+    totalEfficiency, handleAction, handleUndo, startNewMatch,
+    quickReset, loadMatchForEdit, deleteMatch
+  } = useMatchStats();
 
-    // Funktion der stopper den indbyggede scrolling, hvis vi er i toppen
-    const handleTouchMove = (e: TouchEvent) => {
-      // Tjekker om trækket er opad (positive delta) eller nedad (negative delta)
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchY - lastTouchY;
-      lastTouchY = touchY;
-
-      // Hvis vi er i toppen af siden (scrollY === 0) og trækker nedad (deltaY > 0),
-      // forhindrer vi standard browser-handlingen (opfriskning).
-      if (window.scrollY === 0 && deltaY > 0) {
-        e.preventDefault();
-      }
-    };
-
-    // Lyt efter berøringsbevægelser
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-    // Renser op: fjerner lytteren, når komponenten afmonteres
-    return () => {
-      document.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, []); // [] betyder, at effekten kun kører én gang ved indlæsning
-
-  // --- BEREGNINGER (Uændret) ---
-  const goals = history.filter((a) => a === 'goal').length;
-  const saves = history.filter((a) => a === 'save').length;
-  const missed = history.filter((a) => a === 'miss').length;
-
-  const shotsOnTarget = goals + saves;
-  const totalAttempts = goals + saves + missed;
-
-  const savePercentage = shotsOnTarget === 0
-    ? 0
-    : (saves / shotsOnTarget) * 100;
-
-  const totalEfficiency = totalAttempts === 0
-    ? 0
-    : ((saves + missed) / totalAttempts) * 100;
-
-  // --- FUNKTIONER (Uændret) ---
-
-  const handleAction = (action: Action) => {
-    setHistory([...history, action]);
+  const onEditFromHistory = (match: any) => {
+    loadMatchForEdit(match);
+    setCurrentView('tracker');
   };
 
-  const handleUndoSpecific = (actionToRemove: Action) => {
-    const newHistory = [...history];
-    const indexToRemove = newHistory.lastIndexOf(actionToRemove);
-
-    if (indexToRemove !== -1) {
-      newHistory.splice(indexToRemove, 1);
-      setHistory(newHistory);
-    }
-  };
-
-  const handleReset = () => {
-    setHistory([]);
-  };
+  if (currentView === 'history') {
+    return (
+      <div className="container">
+        <Navbar currentView="history" onNavigate={setCurrentView} onOpenModal={open} />
+        <HistoryPage onEdit={onEditFromHistory} onDelete={deleteMatch} />
+      </div>
+    );
+  }
 
   return (
     <div className="container">
-      {/* ... Resten af JSX'en er uændret ... */}
-      <h1>Målmands Statistik 🤾</h1>
+      <Navbar currentView="tracker" onNavigate={setCurrentView} onOpenModal={open} />
+      {isLoading && (
+        <div className="loading-overlay"><div className="spinner"></div><p>Arbejder...</p></div>
+      )}
+      {isQuickReset && <div className="warning-banner">⚠️ Hurtig tæller: Gemmer IKKE</div>}
 
-      <div className="stats-board">
-        <div className="stat-item">
-          <h2>{saves}</h2>
-          <p>Redninger</p>
+      <header>
+        <div className="match-header">
+          <span className="league-badge">{matchInfo?.league || 'Klar'}</span>
+          <h1>{matchInfo ? `${matchInfo.homeTeam} vs ${matchInfo.awayTeam}` : 'Målmands Statistik'}</h1>
         </div>
-        <div className="stat-item">
-          <h2>{goals}</h2>
-          <p>Mål scoret</p>
-        </div>
-        <div className="stat-item">
-          <h2>{missed}</h2>
-          <p>Skud forbi</p>
-        </div>
-      </div>
+      </header>
 
-      <div className="controls-grid">
-        <button className="btn save big-btn" onClick={() => handleAction('save')}>Redning</button>
-        <button className="btn undo-small" onClick={() => handleUndoSpecific('save')} disabled={saves === 0} title="Fortryd sidste redning">↶</button>
-
-        <button className="btn goal big-btn" onClick={() => handleAction('goal')}>Mål Scoret</button>
-        <button className="btn undo-small" onClick={() => handleUndoSpecific('goal')} disabled={goals === 0} title="Fortryd sidste mål">↶</button>
-
-        <button className="btn miss big-btn" onClick={() => handleAction('miss')}>Skud Forbi</button>
-        <button className="btn undo-small" onClick={() => handleUndoSpecific('miss')} disabled={missed === 0} title="Fortryd sidste forbi">↶</button>
-      </div>
-
-      <hr />
-
-      <div className="results">
-        <h3>Statistik</h3>
-        <p>
-          Redningsprocent: <strong>{savePercentage.toFixed(1)}%</strong>
-        </p>
-        <p>
-          Total effektivitet: <strong>{totalEfficiency.toFixed(1)}%</strong>
-        </p>
-      </div>
-
-      <button className="btn reset" onClick={handleReset}>
-        Nulstil Kamp
-      </button>
+      <main>
+        <StatsBoard {...stats} />
+        <ActionButtons onAction={handleAction} onUndo={handleUndo} counts={stats} />
+        <hr />
+        <MatchResults savePercentage={savePercentage} totalEfficiency={totalEfficiency} />
+        {isOpen && <Modal onClose={close} onStartMatch={startNewMatch} onQuickReset={quickReset} />}
+      </main>
     </div>
   );
 }

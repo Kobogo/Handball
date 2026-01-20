@@ -1,0 +1,151 @@
+/* 1. Selve den grå/gennemsigtige baggrund der dækker hele skærmen */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* Sort med 60% gennemsigtighed */
+  display: flex;
+  justify-content: center; /* Centrerer vandret */
+  align-items: center;     /* Centrerer lodret */
+  z-index: 1000;           /* Sikrer den ligger øverst */
+  backdrop-filter: blur(4px); /* Gør baggrunden bag modalen sløret (valgfrit) */
+}
+
+/* 2. Selve modal-boksen */
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px; /* Så den ikke bliver for bred på computeren */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  color: #333;
+  text-align: center;
+}
+
+/* 3. Luk-knappen (X) i hjørnet */
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-x:hover {
+  color: #000;
+}
+
+/* 4. Container til de to knapper i bunden */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+/* Styling af selve knapperne i modalen */
+.modal-actions .btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  flex: 1; /* Gør at knapperne fylder lige meget */
+}
+
+.modal-actions .btn.reset {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.modal-actions .btn.cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.modal-actions .btn:hover {
+  opacity: 0.9;
+}
+
+.league-selector {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 20px;
+}
+
+.league-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.league-btn.active {
+  border-color: #4CAF50;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* Vigtigt for padding */
+}
+
+.start-match-btn {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.start-match-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.match-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.league-badge {
+  background: #2196F3;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.quick-reset-info {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
