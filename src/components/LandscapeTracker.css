@@ -42,11 +42,34 @@
     /* Genbrug af globale knap-styles */
     .controls-grid {
         margin-bottom: 0;
+        display: flex !important;
+        align-items: stretch;
+    }
+
+    /* Venstre side: Behold normal rækkefølge (Undo til højre for knappen) */
+    .left-side-controls {
+        flex-direction: row;
+    }
+
+    /* Højre side: Vend rækkefølgen (Undo til venstre for knappen) */
+    .right-side-controls {
+        flex-direction: row-reverse;
     }
 
     .big-btn {
+        flex: 1;
         padding: 18px 10px !important;
         font-size: 1rem !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .undo-small {
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Gør 'Mål scoret' knappen ekstra tydelig */
@@ -87,6 +110,13 @@
         opacity: 0.7;
         margin-bottom: 2px;
         font-weight: 600;
+
+        /* Truncation logik */
+        max-width: 80px;           /* Juster denne bredde efter behov */
+        white-space: nowrap;       /* Forhindrer teksten i at hoppe ned på næste linje */
+        overflow: hidden;          /* Skjuler det overskydende tekst */
+        text-overflow: ellipsis;   /* Tilføjer '...' for enden */
+        text-align: center;
     }
 
     .score-number {

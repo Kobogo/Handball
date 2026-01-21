@@ -10,17 +10,31 @@ interface Props {
     missed: number;
     teamGoals: number;
   };
+  homeTeam: string;
+  awayTeam: string;
   onAction: (action: Action) => void;
   onUndo: (action: Action) => void;
   savePercentage: number;
   totalEfficiency: number;
 }
 
-export const LandscapeTracker = ({ stats, onAction, onUndo, savePercentage, totalEfficiency }: Props) => {
+export const LandscapeTracker = ({
+  stats,
+  homeTeam,
+  awayTeam,
+  onAction,
+  onUndo,
+  savePercentage,
+  totalEfficiency
+}: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const renderControl = (type: Action, label: string, className: string) => (
-    <div className="controls-grid">
+  // Hjælpefunktioner til navne logik
+  const getHomeLabel = () => homeTeam || 'Os';
+  const getAwayLabel = () => awayTeam || 'Modst.';
+
+  const renderControl = (type: Action, label: string, className: string, side: 'left' | 'right') => (
+    <div className={`controls-grid ${side}-side-controls`}>
       <button className={`btn big-btn ${className}`} onClick={() => onAction(type)}>
         {label}
       </button>
@@ -35,15 +49,15 @@ export const LandscapeTracker = ({ stats, onAction, onUndo, savePercentage, tota
 
       {/* VENSTRE SIDE */}
       <div className="side-panel">
-        <h3>{isFlipped ? 'Modstander' : 'Vores Mål'}</h3>
+        <h3>{isFlipped ? getAwayLabel() : getHomeLabel()}</h3>
         <div className="btn-group">
           {isFlipped ? (
-            renderControl('team_goal', 'Mål scoret!', 'team_goal')
+            renderControl('team_goal', 'Mål scoret!', 'team_goal', 'left')
           ) : (
             <>
-              {renderControl('save', 'Redning', 'save')}
-              {renderControl('goal', 'Mål imod', 'goal')}
-              {renderControl('miss', 'Forbi', 'miss')}
+              {renderControl('save', 'Redning', 'save', 'left')}
+              {renderControl('goal', 'Mål imod', 'goal', 'left')}
+              {renderControl('miss', 'Forbi', 'miss', 'left')}
             </>
           )}
         </div>
@@ -57,7 +71,7 @@ export const LandscapeTracker = ({ stats, onAction, onUndo, savePercentage, tota
 
         <div className="landscape-score-display">
           <div className="score-box">
-            <span className="score-label">{isFlipped ? 'Modst.' : 'Os'}</span>
+            <span className="score-label">{isFlipped ? getAwayLabel() : getHomeLabel()}</span>
             <span className="score-number">
               {isFlipped ? (stats.goals || 0) : (stats.teamGoals || 0)}
             </span>
@@ -66,13 +80,14 @@ export const LandscapeTracker = ({ stats, onAction, onUndo, savePercentage, tota
           <div className="score-separator">-</div>
 
           <div className="score-box">
-            <span className="score-label">{isFlipped ? 'Os' : 'Modst.'}</span>
+            <span className="score-label">{isFlipped ? getHomeLabel() : getAwayLabel()}</span>
             <span className="score-number">
               {isFlipped ? (stats.teamGoals || 0) : (stats.goals || 0)}
             </span>
           </div>
         </div>
 
+        {/* ... resten af koden (stats-row og results-wrapper) er uændret ... */}
         <div className="landscape-stats-row">
           <div className="stat-item">
             <p>Redninger</p>
@@ -91,15 +106,15 @@ export const LandscapeTracker = ({ stats, onAction, onUndo, savePercentage, tota
 
       {/* HØJRE SIDE */}
       <div className="side-panel">
-        <h3>{isFlipped ? 'Vores Mål' : 'Modstander'}</h3>
+        <h3>{isFlipped ? getHomeLabel() : getAwayLabel()}</h3>
         <div className="btn-group">
           {!isFlipped ? (
-            renderControl('team_goal', 'Mål scoret!', 'team_goal')
+            renderControl('team_goal', 'Mål scoret!', 'team_goal', 'right')
           ) : (
             <>
-              {renderControl('save', 'Redning', 'save')}
-              {renderControl('goal', 'Mål imod', 'goal')}
-              {renderControl('miss', 'Forbi', 'miss')}
+              {renderControl('save', 'Redning', 'save', 'right')}
+              {renderControl('goal', 'Mål imod', 'goal', 'right')}
+              {renderControl('miss', 'Forbi', 'miss', 'right')}
             </>
           )}
         </div>

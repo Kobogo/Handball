@@ -9,7 +9,7 @@ interface ModalProps {
 
 export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
   const [league, setLeague] = useState<League>('');
-  const [homeTeam, setHomeTeam] = useState('');
+  const [homeTeam, setHomeTeam] = useState('Team Ramsø');
   const [awayTeam, setAwayTeam] = useState('');
 
   const isFormValid = league !== '' && homeTeam.trim() !== '' && awayTeam.trim() !== '';

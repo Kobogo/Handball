@@ -68,6 +68,8 @@ function App() {
       {/* 2. LANDSCAPE OVERLAY (Vises kun via CSS media query) */}
       <LandscapeTracker
         stats={stats}
+        homeTeam={matchInfo?.homeTeam || 'Os'}
+        awayTeam={matchInfo?.awayTeam || 'Modst.'}
         onAction={handleAction}
         onUndo={handleUndo}
         savePercentage={savePercentage}
