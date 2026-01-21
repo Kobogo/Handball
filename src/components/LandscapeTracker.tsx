@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Action } from '../hooks/useMatchStats';
 import { MatchResults } from './MatchResults';
 import './LandscapeTracker.css';
