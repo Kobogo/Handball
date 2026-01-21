@@ -98,110 +98,11 @@ header {
     z-index: 10;
 }
 
-/* Statistik-tavlen (Moderne kort-look) */
-.stats-board {
-    display: flex;
-    justify-content: space-around;
-    background-color: var(--white);
-    padding: 5px 4px;
-    border-radius: 8px;
-    margin-bottom: 5px;
-    box-shadow: var(--card-shadow);
-}
-
-.stat-item h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    color: var(--primary-blue);
-}
-
-.stat-item p {
-    margin: 0;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-/* Knap-layout */
-.controls-grid {
-    display: grid;
-    grid-template-columns: 1fr 45px;
-    gap: 6px;
-    margin-bottom: 8px;
-}
-
-.btn {
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: transform 0.1s;
-}
-
-.btn:active {
-    transform: scale(0.98);
-}
-
-.big-btn {
-    padding: 12px;
-    font-size: 0.9rem;
-    color: var(--white);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.undo-small {
-    background-color: #e0e0e0;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* Knap Farver */
 .save { background-color: var(--success-green); }
 .goal { background-color: var(--danger-red); }
 .miss { background-color: var(--primary-blue); }
 .team_goal { background-color: var(--team-purple); }
-
-/* Resultatsektion (Nu ren hvid med blå accent) */
-.results {
-    background-color: var(--white);
-    padding: 12px;
-    border-radius: 12px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-shadow: var(--card-shadow);
-}
-
-.results h3 {
-    font-size: 0.9rem;
-    margin: 0 0 4px 0;
-    color: var(--text-muted);
-}
-
-.results p {
-    font-size: 0.85rem;
-    margin: 4px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.results strong {
-    font-size: 1.2rem;
-    color: var(--text-main);
-}
-
-hr {
-    margin: 8px 0;
-    border: 0;
-    border-top: 1px solid var(--border-color);
-}
 
 /* Overlays & Modaler beholdes men med variabler */
 .loading-overlay {

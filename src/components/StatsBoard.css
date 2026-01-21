@@ -1,0 +1,24 @@
+/* Statistik-tavlen (Moderne kort-look) */
+.stats-board {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--white);
+    padding: 5px 4px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    box-shadow: var(--card-shadow);
+}
+
+.stat-item h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+}
+
+.stat-item p {
+    margin: 0;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+}

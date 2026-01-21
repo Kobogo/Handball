@@ -1,4 +1,3 @@
-// components/MatchResults.tsx
 interface MatchResultsProps {
   savePercentage: number;
   totalEfficiency: number;
