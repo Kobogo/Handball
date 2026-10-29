@@ -1,23 +1,14 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import type { League, Goalkeeper } from "../hooks/useMatchStats";
 
 interface ModalProps {
   onClose: () => void;
   onStartMatch: (info: { league: League; homeTeam: string; awayTeam: string; goalkeepers: Goalkeeper[] }) => void;
-=======
-import type { League } from "../hooks/useMatchStats";
-
-interface ModalProps {
-  onClose: () => void;
-  onStartMatch: (info: { league: League; homeTeam: string; awayTeam: string }) => void;
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
   onQuickReset: () => void;
 }
 
 export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
   const [league, setLeague] = useState<League>('');
-<<<<<<< HEAD
   const [homeTeam, setHomeTeam] = useState('Roskilde Håndbold');
   const [awayTeam, setAwayTeam] = useState('');
   
@@ -35,10 +26,6 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
 
   const [selectedExtraGkId, setSelectedExtraGkId] = useState<string>('');
   const [newExtraGkName, setNewExtraGkName] = useState<string>('');
-=======
-  const [homeTeam, setHomeTeam] = useState('Team Ramsø');
-  const [awayTeam, setAwayTeam] = useState('');
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 
   const isFormValid = league !== '' && homeTeam.trim() !== '' && awayTeam.trim() !== '';
 
@@ -50,7 +37,6 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
         <h2>Ny Kamp</h2>
 
         <div className="form-section">
-<<<<<<< HEAD
           <p>Vælg Hold / Række:</p>
           <div className="league-selector">
             <button
@@ -61,29 +47,13 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
               className={`league-btn ${league === 'Roskilde Håndbold 4' ? 'active' : ''}`}
               onClick={() => setLeague('Roskilde Håndbold 4')}
             >Roskilde Håndbold 4</button>
-=======
-          <p>Vælg Liga:</p>
-          <div className="league-selector">
-            <button
-              className={`league-btn ${league === 'U11' ? 'active' : ''}`}
-              onClick={() => setLeague('U11')}
-            >U11</button>
-            <button
-              className={`league-btn ${league === 'U13' ? 'active' : ''}`}
-              onClick={() => setLeague('U13')}
-            >U13</button>
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
           </div>
         </div>
 
         <div className="form-section">
           <input
             type="text"
-<<<<<<< HEAD
             placeholder="Hjemmehold"
-=======
-            placeholder="Hjemmehold (f.eks. klubnavn)"
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
             value={homeTeam}
             onChange={(e) => setHomeTeam(e.target.value)}
           />
@@ -95,7 +65,6 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
           />
         </div>
 
-<<<<<<< HEAD
         {/* Målmands-sektion */}
         <div className="form-section gk-section">
           <p className="gk-section-title">Målmænd i truppen:</p>
@@ -137,13 +106,10 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
           />
         </div>
 
-=======
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
         <button
           className="btn start-match-btn"
           disabled={!isFormValid}
           onClick={() => {
-<<<<<<< HEAD
             const goalkeepers: Goalkeeper[] = [
               { id: '1', name: 'August' }
             ];
@@ -164,9 +130,6 @@ export const Modal = ({ onClose, onStartMatch, onQuickReset }: ModalProps) => {
             }
 
             onStartMatch({ league, homeTeam, awayTeam, goalkeepers });
-=======
-            onStartMatch({ league, homeTeam, awayTeam });
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
             onClose();
           }}
         >

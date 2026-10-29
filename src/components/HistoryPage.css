@@ -216,7 +216,6 @@
     padding: 40px;
     color: var(--text-muted);
     font-style: italic;
-<<<<<<< HEAD
 }
 
 /* --- MÅLMÅNDS-OVERSIGT I HISTORIK --- */
@@ -258,6 +257,4 @@
 .gk-history-stats {
     color: var(--text-main);
     font-size: 0.8rem;
-=======
->>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 }
