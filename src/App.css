@@ -1,0 +1,124 @@
+:root {
+  /* Primære farver */
+  --primary-blue: #2196F3;
+  --primary-dark: #1a1a1a;
+  --bg-light: #f8f9fa;
+  --white: #ffffff;
+
+  /* Status farver */
+  --success-green: #2e7d32;
+  --danger-red: #d32f2f;
+  --team-purple: #673ab7;
+
+  /* UI Elementer */
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --border-color: #eeeeee;
+  --text-main: #333333;
+  --text-muted: #666666;
+}
+
+/* --- GLOBALE NULSTILLINGER --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    overscroll-behavior-y: contain;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#root {
+    height: 100%;
+}
+
+/* --- LAYOUT --- */
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    padding-top: 58px;
+    position: relative;
+}
+
+/* KOMPAKT HEADER SEKTION */
+header {
+    margin-top: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.match-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.match-header h1 {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.league-badge {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Rødt banner advarsel */
+.warning-banner {
+    background-color: var(--danger-red);
+    color: var(--white);
+    padding: 4px;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    z-index: 10;
+}
+
+/* Knap Farver */
+.save { background-color: var(--success-green); }
+.goal { background-color: var(--danger-red); }
+.miss { background-color: var(--primary-blue); }
+.team_goal { background-color: var(--team-purple); }
+
+/* Overlays & Modaler beholdes men med variabler */
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 30px; height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

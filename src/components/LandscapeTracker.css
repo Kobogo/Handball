@@ -1,0 +1,211 @@
+/* --- LANDSCAPE OPTIMERING --- */
+@media (orientation: landscape) {
+    .landscape-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr 1fr; /* Center-panelet får lidt mere plads til scoren */
+        gap: 12px;
+        height: 100vh;
+        background: var(--bg-light);
+        padding: 10px;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 9999;
+    }
+
+    /* Sidepaneler med knapper */
+    .side-panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+        padding: 15px;
+    }
+
+    .side-panel h3 {
+        margin: 0 0 15px 0;
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* Genbrug af globale knap-styles */
+    .controls-grid {
+        margin-bottom: 0;
+        display: flex !important;
+        align-items: stretch;
+    }
+
+    /* Venstre side: Behold normal rækkefølge (Undo til højre for knappen) */
+    .left-side-controls {
+        flex-direction: row;
+    }
+
+    /* Højre side: Vend rækkefølgen (Undo til venstre for knappen) */
+    .right-side-controls {
+        flex-direction: row-reverse;
+    }
+
+    .big-btn {
+        flex: 1;
+        padding: 18px 10px !important;
+        font-size: 1rem !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .undo-small {
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Gør 'Mål scoret' knappen ekstra tydelig */
+    .team_goal.big-btn {
+        height: 140px;
+    }
+
+    /* MIDTERPANEL LOGIK */
+    .center-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    /* DET NYE SCORE-DISPLAY ØVERST */
+    .landscape-score-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--white);
+        padding: 10px;
+        border-radius: 12px;
+        gap: 25px;
+        box-shadow: var(--card-shadow);
+    }
+
+    .score-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .score-label {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        color: var(--text-main);
+        opacity: 0.7;
+        margin-bottom: 2px;
+        font-weight: 600;
+
+        /* Truncation logik */
+        max-width: 80px;           /* Juster denne bredde efter behov */
+        white-space: nowrap;       /* Forhindrer teksten i at hoppe ned på næste linje */
+        overflow: hidden;          /* Skjuler det overskydende tekst */
+        text-overflow: ellipsis;   /* Tilføjer '...' for enden */
+        text-align: center;
+    }
+
+    .score-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--primary-blue);
+    }
+
+    .score-separator {
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        font-weight: 300;
+    }
+
+    /* STATS RÆKKEN (Redninger og Forbi) */
+    .landscape-stats-row {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .landscape-stats-row .stat-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--white);
+        border-radius: 8px;
+        padding: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .landscape-stats-row .stat-item h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+    }
+
+    .landscape-stats-row .stat-item p {
+        margin: 0;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 700;
+    }
+
+    /* RESULTAT BOKS (Procenterne) */
+    .results-wrapper {
+        display: flex;
+    }
+
+    .results-wrapper .results {
+        width: 100%;
+        background: var(--white);
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        box-shadow: none;
+    }
+
+    /* SIDE-SWITCH KNAP */
+    .switch-side-btn {
+        padding: 6px 12px;
+        background: var(--white);
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        font-size: 0.7rem;
+        font-weight: 600;
+        cursor: pointer;
+        align-self: center;
+        transition: background 0.2s;
+    }
+
+    .switch-side-btn:active {
+        background: #f0f0f0;
+    }
+
+    /* Skjul den gamle stats-board i landscape hvis den findes i DOM'en */
+    .center-panel .stats-board {
+        display: none !important;
+    }
+}
+
+/* Skjul landscape-layoutet helt når vi står op */
+@media (orientation: portrait) {
+    .landscape-layout {
+        display: none !important;
+    }
+}

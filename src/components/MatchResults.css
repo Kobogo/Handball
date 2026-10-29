@@ -1,0 +1,37 @@
+/* Resultatsektion (Nu ren hvid med blå accent) */
+.results {
+    background-color: var(--white);
+    padding: 12px;
+    border-radius: 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: var(--card-shadow);
+}
+
+.results h3 {
+    font-size: 0.9rem;
+    margin: 0 0 4px 0;
+    color: var(--text-muted);
+}
+
+.results p {
+    font-size: 0.85rem;
+    margin: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.results strong {
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+hr {
+    margin: 8px 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+}
