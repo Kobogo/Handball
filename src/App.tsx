@@ -30,9 +30,12 @@ function App() {
     isLoading,
     savePercentage,
     totalEfficiency,
+<<<<<<< HEAD
     activeGoalkeeperId,
     setActiveGoalkeeperId,
     getStatsForGk,
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
     handleAction,
     handleUndo,
     startNewMatch,
@@ -52,6 +55,7 @@ function App() {
     setCurrentView('tracker');
   };
 
+<<<<<<< HEAD
   // Aktiv målmand stats (til tællere og knapper)
   const activeGkObj = matchInfo?.goalkeepers?.find(g => g.id === activeGoalkeeperId);
   const activeStats = activeGoalkeeperId 
@@ -60,6 +64,9 @@ function App() {
 
   const hasMultipleGoalkeepers = Boolean(matchInfo?.goalkeepers && matchInfo.goalkeepers.length > 1);
 
+=======
+  // Render History View
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
   if (currentView === 'history') {
     return (
       <div className="container">
@@ -69,6 +76,7 @@ function App() {
     );
   }
 
+<<<<<<< HEAD
   return (
     <div className="container">
       <Navbar currentView="tracker" onNavigate={setCurrentView} onOpenModal={open} />
@@ -91,6 +99,26 @@ function App() {
       />
 
       {/* PORTRAIT CONTENT */}
+=======
+  // Render Tracker View (Portrait + Landscape)
+  return (
+    <div className="container">
+      {/* 1. NAVIGATION (Altid synlig) */}
+      <Navbar currentView="tracker" onNavigate={setCurrentView} onOpenModal={open} />
+
+      {/* 2. LANDSCAPE OVERLAY (Vises kun via CSS media query) */}
+      <LandscapeTracker
+        stats={stats}
+        homeTeam={matchInfo?.homeTeam || 'Os'}
+        awayTeam={matchInfo?.awayTeam || 'Modst.'}
+        onAction={handleAction}
+        onUndo={handleUndo}
+        savePercentage={savePercentage}
+        totalEfficiency={totalEfficiency}
+      />
+
+      {/* 3. PORTRAIT CONTENT (Indpakket så det kan skjules samlet) */}
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
       <div className="portrait-content">
         {isLoading && (
           <div className="loading-overlay">
@@ -111,6 +139,7 @@ function App() {
         </header>
 
         <main>
+<<<<<<< HEAD
           {/* 1. TOPPEN: Vis kun knapper til at skifte imellem målmænd, hvis der er flere end 1 */}
           {hasMultipleGoalkeepers && (
             <div style={{ display: 'flex', gap: '8px', marginBottom: '15px', justifyContent: 'center' }}>
@@ -191,6 +220,16 @@ function App() {
         </main>
       </div>
 
+=======
+          <StatsBoard {...stats} />
+          <ActionButtons onAction={handleAction} onUndo={handleUndo} counts={stats} />
+          <hr />
+          <MatchResults savePercentage={savePercentage} totalEfficiency={totalEfficiency} />
+        </main>
+      </div>
+
+      {/* MODAL (Udenfor portrait-content så den altid kan ses) */}
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
       {isOpen && (
         <Modal
           onClose={close}

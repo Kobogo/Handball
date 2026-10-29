@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './HistoryPage.css';
 
+<<<<<<< HEAD
 interface GoalkeeperStats {
   gk_id: string;
   gk_name: string;
@@ -9,6 +10,8 @@ interface GoalkeeperStats {
   missed: number;
 }
 
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 interface MatchHistory {
   id: number;
   league: string;
@@ -19,7 +22,10 @@ interface MatchHistory {
   goals_against: string;
   missed: string;
   team_goals: string;
+<<<<<<< HEAD
   goalkeepers?: GoalkeeperStats[];
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 }
 
 interface HistoryPageProps {
@@ -37,6 +43,11 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
+<<<<<<< HEAD
+=======
+          // Vi sorterer dem eksplicit her efter ID (højeste ID er nyeste)
+          // Dette sikrer at nyeste altid er øverst uanset backend rækkefølge
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
           const sorted = [...data].sort((a, b) => b.id - a.id);
           setMatches(sorted);
         } else {
@@ -105,9 +116,15 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
               <p className="no-matches">Ingen gemte kampe endnu.</p>
             ) : (
               matches.map(match => {
+<<<<<<< HEAD
                 const totalSaves = Number(match.saves);
                 const totalGoalsAgainst = Number(match.goals_against);
                 const totalSavePct = (totalSaves / (totalSaves + totalGoalsAgainst)) * 100 || 0;
+=======
+                const saves = Number(match.saves);
+                const goalsAgainst = Number(match.goals_against);
+                const savePct = (saves / (saves + goalsAgainst)) * 100 || 0;
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 
                 return (
                   <div key={match.id} className="match-card">
@@ -131,6 +148,7 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
                       <span className="score-display">{match.team_goals} - {match.goals_against}</span>
                     </div>
 
+<<<<<<< HEAD
                     {/* Samlede hold-stats */}
                     <div className="stats-grid">
                       <div className="stat-item">
@@ -141,10 +159,22 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
                         <span className="stat-label">Rednings % (Total)</span>
                         <span className={`stat-value ${totalSavePct >= 40 ? 'pct-high' : ''}`}>
                           {totalSavePct.toFixed(1)}%
+=======
+                    <div className="stats-grid">
+                      <div className="stat-item">
+                        <span className="stat-label">Redninger</span>
+                        <span className="stat-value">{match.saves}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Rednings %</span>
+                        <span className={`stat-value ${savePct >= 40 ? 'pct-high' : ''}`}>
+                          {savePct.toFixed(1)}%
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
                         </span>
                       </div>
                     </div>
 
+<<<<<<< HEAD
                     {/* MÅLMÆND INDIVIDUELLE STATS */}
                     {match.goalkeepers && match.goalkeepers.length > 0 && (
                       <div className="gk-history-section">
@@ -166,6 +196,8 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
                       </div>
                     )}
 
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
                     <div className="history-actions">
                       <button className="edit-btn" onClick={() => onEdit(match)}>
                         Rediger

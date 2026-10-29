@@ -148,6 +148,7 @@
   color: #888;
   margin-top: 10px;
   margin-bottom: 0;
+<<<<<<< HEAD
 }
 
 /* --- MÅLMANDS SEKTION I MODAL --- */
@@ -184,4 +185,6 @@
 
 .gk-input-extra {
   margin-bottom: 0 !important;
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 }

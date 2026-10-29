@@ -1,7 +1,12 @@
 import { useState } from 'react';
+<<<<<<< HEAD
 import type { Action, Goalkeeper } from '../hooks/useMatchStats';
 import { MatchResults } from './MatchResults';
 import { StatsBoard } from './StatsBoard';
+=======
+import type { Action } from '../hooks/useMatchStats';
+import { MatchResults } from './MatchResults';
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 import './LandscapeTracker.css';
 
 interface Props {
@@ -11,6 +16,7 @@ interface Props {
     missed: number;
     teamGoals: number;
   };
+<<<<<<< HEAD
   activeGkStats: {
     saves: number;
     goals: number;
@@ -22,6 +28,8 @@ interface Props {
   activeGoalkeeperId: string;
   onSelectGk: (id: string) => void;
   getStatsForGk: (id: string) => { goals: number; saves: number; missed: number; savePercentage: number; teamGoals?: number };
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
   homeTeam: string;
   awayTeam: string;
   onAction: (action: Action) => void;
@@ -32,11 +40,14 @@ interface Props {
 
 export const LandscapeTracker = ({
   stats,
+<<<<<<< HEAD
   activeGkStats,
   goalkeepers,
   activeGoalkeeperId,
   onSelectGk,
   getStatsForGk,
+=======
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
   homeTeam,
   awayTeam,
   onAction,
@@ -46,6 +57,7 @@ export const LandscapeTracker = ({
 }: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
+<<<<<<< HEAD
   const getHomeLabel = () => homeTeam || 'Roskilde Håndbold';
   const getAwayLabel = () => awayTeam || 'Modst.';
 
@@ -56,6 +68,12 @@ export const LandscapeTracker = ({
 
   const hasMultipleGoalkeepers = goalkeepers.length > 1;
 
+=======
+  // Hjælpefunktioner til navne logik
+  const getHomeLabel = () => homeTeam || 'Os';
+  const getAwayLabel = () => awayTeam || 'Modst.';
+
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
   const renderControl = (type: Action, label: string, className: string, side: 'left' | 'right') => (
     <div className={`controls-grid ${side}-side-controls`}>
       <button className={`btn big-btn ${className}`} onClick={() => onAction(type)}>
@@ -88,6 +106,7 @@ export const LandscapeTracker = ({
 
       {/* MIDTEN */}
       <div className="center-panel">
+<<<<<<< HEAD
         <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
           <button className="switch-side-btn" onClick={() => setIsFlipped(!isFlipped)}>
             🔄 Byt Side
@@ -121,12 +140,21 @@ export const LandscapeTracker = ({
             })}
           </div>
         )}
+=======
+        <button className="switch-side-btn" onClick={() => setIsFlipped(!isFlipped)}>
+          🔄 Byt Side
+        </button>
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 
         <div className="landscape-score-display">
           <div className="score-box">
             <span className="score-label">{isFlipped ? getAwayLabel() : getHomeLabel()}</span>
             <span className="score-number">
+<<<<<<< HEAD
               {isFlipped ? (activeGkStats.goals || 0) : (stats.teamGoals || 0)}
+=======
+              {isFlipped ? (stats.goals || 0) : (stats.teamGoals || 0)}
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
             </span>
           </div>
 
@@ -135,11 +163,16 @@ export const LandscapeTracker = ({
           <div className="score-box">
             <span className="score-label">{isFlipped ? getHomeLabel() : getAwayLabel()}</span>
             <span className="score-number">
+<<<<<<< HEAD
               {isFlipped ? (stats.teamGoals || 0) : (activeGkStats.goals || 0)}
+=======
+              {isFlipped ? (stats.teamGoals || 0) : (stats.goals || 0)}
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
             </span>
           </div>
         </div>
 
+<<<<<<< HEAD
         <StatsBoard 
           saves={activeStats.saves} 
           goals={activeStats.goals} 
@@ -179,6 +212,19 @@ export const LandscapeTracker = ({
             })}
           </div>
         )}
+=======
+        {/* ... resten af koden (stats-row og results-wrapper) er uændret ... */}
+        <div className="landscape-stats-row">
+          <div className="stat-item">
+            <p>Redninger</p>
+            <h2>{stats.saves || 0}</h2>
+          </div>
+          <div className="stat-item">
+            <p>Forbi</p>
+            <h2>{stats.missed || 0}</h2>
+          </div>
+        </div>
+>>>>>>> a75d83e9237ad663553ead4d5c944d07d1b4fa6d
 
         <div className="results-wrapper">
           <MatchResults savePercentage={savePercentage} totalEfficiency={totalEfficiency} />
