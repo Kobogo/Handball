@@ -81,10 +81,13 @@ export function useMatchStats() {
     const missed = gkActions.filter(a => a.action === 'miss').length;
     const teamGoals = stats.teamGoals;
 
+    // Samlede mål imod alle målmænd i kampen (til måltavlen)
+    const totalGoalsAgainst = history.filter(a => a.action === 'goal').length;
+
     const savePercentage = (goals + saves) === 0 ? 0 : (saves / (goals + saves)) * 100;
     const totalEfficiency = (goals + saves + missed) === 0 ? 0 : ((saves + missed) / (goals + saves + missed)) * 100;
     
-    return { goals, saves, missed, teamGoals, savePercentage, totalEfficiency };
+    return { goals, saves, missed, teamGoals, totalGoalsAgainst, savePercentage, totalEfficiency };
   };
 
   const savePercentage = (stats.goals + stats.saves) === 0 ? 0 : (stats.saves / (stats.goals + stats.saves)) * 100;
@@ -93,21 +96,65 @@ export function useMatchStats() {
   const loadMatchForEdit = (match: any) => {
     setIsLoading(true);
     setMatchId(match.id);
+
+    // 1. Hent målmændene for kampen
+    const matchGoalkeepers: Goalkeeper[] = 
+      match.goalkeepers && match.goalkeepers.length > 0
+        ? match.goalkeepers.map((gk: any) => ({
+            id: String(gk.gk_id),
+            name: gk.gk_name
+          }))
+        : [{ id: '1', name: 'August' }];
+
     setMatchInfo({
       league: match.league,
       homeTeam: match.home_team,
       awayTeam: match.away_team,
-      goalkeepers: [{ id: '1', name: 'August' }]
+      goalkeepers: matchGoalkeepers
     });
 
-    const newHistory: ActionLog[] = [
-      ...Array(Number(match.saves)).fill({ action: 'save', goalkeeperId: '1' }),
-      ...Array(Number(match.goals_against)).fill({ action: 'goal', goalkeeperId: '1' }),
-      ...Array(Number(match.missed)).fill({ action: 'miss', goalkeeperId: '1' }),
-      ...Array(Number(match.team_goals)).fill({ action: 'team_goal' }),
-    ];
-    setHistory(newHistory);
-    setActiveGoalkeeperId('1');
+    // 2. Opbyg historikken (history) præcist for hver enkelt målmand baseret på databasens data
+    const reconstructedHistory: ActionLog[] = [];
+
+    if (match.goalkeepers && match.goalkeepers.length > 0) {
+      match.goalkeepers.for_each ? match.goalkeepers.forEach((gk: any) => {}) : null; // (sikkerhed)
+      
+      // Løb igennem hver målmand og genskab deres redninger og mål imod
+      match.goalkeepers.forEach((gk: any) => {
+        const gkId = String(gk.gk_id);
+        const savesCount = Number(gk.saves) || 0;
+        const goalsCount = Number(gk.goals_against) || 0;
+        const missedCount = Number(gk.missed) || 0;
+
+        // Tilføj redninger til denne målmand
+        for (let i = 0; i < savesCount; i++) {
+          reconstructedHistory.push({ action: 'save', goalkeeperId: gkId });
+        }
+        // Tilføj mål imod til denne målmand
+        for (let i = 0; i < goalsCount; i++) {
+          reconstructedHistory.push({ action: 'goal', goalkeeperId: gkId });
+        }
+        // Tilføj forbi til denne målmand
+        for (let i = 0; i < missedCount; i++) {
+          reconstructedHistory.push({ action: 'miss', goalkeeperId: gkId });
+        }
+      });
+    } else {
+      // Fallback hvis der mod forventning ikke er målmandsdata
+      const firstGkId = matchGoalkeepers[0].id;
+      for (let i = 0; i < Number(match.saves); i++) reconstructedHistory.push({ action: 'save', goalkeeperId: firstGkId });
+      for (let i = 0; i < Number(match.goals_against); i++) reconstructedHistory.push({ action: 'goal', goalkeeperId: firstGkId });
+      for (let i = 0; i < Number(match.missed); i++) reconstructedHistory.push({ action: 'miss', goalkeeperId: firstGkId });
+    }
+
+    // 3. Tilføj holdets mål (team_goals) som ikke er knyttet til en specifik målmand
+    const teamGoalsCount = Number(match.team_goals) || 0;
+    for (let i = 0; i < teamGoalsCount; i++) {
+      reconstructedHistory.push({ action: 'team_goal' });
+    }
+
+    setHistory(reconstructedHistory);
+    setActiveGoalkeeperId(matchGoalkeepers[0].id);
     setIsQuickReset(false);
     setIsLoading(false);
   };
@@ -140,10 +187,16 @@ export function useMatchStats() {
 
       if (matchId && !isQuickReset) {
         try {
+          // Send KUN goalkeeperId med hvis det IKKE er et holdmål
+          const bodyData: any = { matchId, actionType: actionToRemove };
+          if (actionToRemove !== 'team_goal') {
+            bodyData.goalkeeperId = activeGoalkeeperId;
+          }
+
           await fetch(`${API_URL}/api/events/undo`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ matchId, actionType: actionToRemove, goalkeeperId: activeGoalkeeperId })
+            body: JSON.stringify(bodyData)
           });
         } catch (error) { console.error(error); }
       }

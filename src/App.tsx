@@ -58,7 +58,7 @@ function App() {
     ? getStatsForGk(activeGoalkeeperId) 
     : { ...stats, savePercentage, totalEfficiency };
 
-  const hasMultipleGoalkeepers = Boolean(matchInfo?.goalkeepers && matchInfo.goalkeepers.length > 1);
+  const hasMultipleGoalkeepers = Boolean(matchInfo?.goalkeepers && matchInfo.goalkeepers.length > 0);
 
   if (currentView === 'history') {
     return (
@@ -111,83 +111,46 @@ function App() {
         </header>
 
         <main>
-          {/* 1. TOPPEN: Vis kun knapper til at skifte imellem målmænd, hvis der er flere end 1 */}
-          {hasMultipleGoalkeepers && (
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '15px', justifyContent: 'center' }}>
-              {matchInfo!.goalkeepers.map(gk => {
-                const isSelected = activeGoalkeeperId === gk.id;
-                return (
-                  <button
-                    key={gk.id}
-                    onClick={() => setActiveGoalkeeperId(gk.id)}
-                    style={{
-                      flex: 1,
-                      padding: '12px',
-                      borderRadius: '10px',
-                      border: isSelected ? '2px solid #2196F3' : '1px solid #ccc',
-                      background: isSelected ? '#e3f2fd' : '#fff',
-                      color: isSelected ? '#0d47a1' : '#333',
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      fontSize: '0.95rem',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-                    }}
-                  >
-                    🛡️ {gk.name} {isSelected ? '✓' : ''}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Aktive tællere for hvem der står på banen lige nu */}
+          {/* Aktive tællere: Bruger activeStats.saves og missed til den aktive, men stats.goals (samlede mål imod) */}
           <StatsBoard 
             saves={activeStats.saves} 
-            goals={activeStats.goals} 
+            goals={stats.goals} 
             missed={activeStats.missed} 
-            teamGoals={activeStats.teamGoals} 
+            teamGoals={stats.teamGoals} 
           />
           <ActionButtons onAction={handleAction} onUndo={handleUndo} counts={activeStats} />
           
           <hr />
 
-          {/* 2. BUNDEN: Vis kun samlet oversigt over målmænd, hvis der er flere end 1 */}
+          {/* MÅLMÆND STATUS */}
           {hasMultipleGoalkeepers && (
-            <div style={{ background: '#fff', padding: '12px', borderRadius: '12px', boxShadow: 'var(--card-shadow)', marginTop: '10px' }}>
-              <h3 style={{ fontSize: '0.9rem', margin: '0 0 8px 0', color: 'var(--text-muted)' }}>Målmænd Status (Hele Kampen)</h3>
-              
-              {matchInfo!.goalkeepers.map(gk => {
-                const gkSt = getStatsForGk(gk.id);
-                const isSelected = activeGoalkeeperId === gk.id;
-                return (
-                  <div 
-                    key={gk.id}
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '8px 0',
-                      borderBottom: '1px solid #f0f0f0',
-                      fontSize: '0.85rem'
-                    }}
-                  >
-                    <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#2196F3' : '#333' }}>
-                      {gk.name} {isSelected ? '(Aktiv)' : ''}
-                    </span>
-                    <span>
-                      Redninger: <strong>{gkSt.saves}</strong> | Mål imod: <strong>{gkSt.goals}</strong> | %: <strong>{gkSt.savePercentage.toFixed(1)}%</strong>
-                    </span>
-                  </div>
-                );
-              })}
+            <div className="gk-status-container">
+              <h3 className="gk-section-title">Målmænd Status</h3>
+              <div className="gk-boxes-stack">
+                {matchInfo!.goalkeepers.map(gk => {
+                  const gkSt = getStatsForGk(gk.id);
+                  const isSelected = activeGoalkeeperId === gk.id;
+                  return (
+                    <div 
+                      key={gk.id}
+                      onClick={() => setActiveGoalkeeperId(gk.id)}
+                      className={`gk-card-box ${isSelected ? 'active' : ''}`}
+                    >
+                      <div className="gk-card-name">
+                        {isSelected ? '🛡️' : ''} {gk.name} {isSelected && '✓ (Aktiv)'}
+                      </div>
+                      <div className="gk-card-stats">
+                        <span>Redninger: <strong>{gkSt.saves}</strong></span>
+                        <span>Mål imod: <strong>{gkSt.goals}</strong></span>
+                        <span>Forbi: <strong>{gkSt.missed}</strong></span>
+                        <span>%: <strong>{gkSt.savePercentage.toFixed(0)}%</strong></span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
-
-          {/* De almindelige procenter for den aktive målmand */}
-          <MatchResults 
-            savePercentage={activeStats.savePercentage} 
-            totalEfficiency={activeStats.totalEfficiency} 
-          />
         </main>
       </div>
 

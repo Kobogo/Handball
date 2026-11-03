@@ -122,3 +122,72 @@ header {
     animation: spin 1s linear infinite;
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- MÅLMÅND STATUS BOKSE (LODRET STAK & STØRRE TEKST) --- */
+.gk-status-container {
+    background: var(--white);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-top: 10px;
+}
+
+.gk-section-title {
+    font-size: 0.9rem;
+    margin: 0 0 8px 0;
+    color: var(--text-muted);
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.gk-boxes-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gk-card-box {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gk-card-box:hover {
+    border-color: var(--primary-blue);
+}
+
+.gk-card-box.active {
+    background: #e3f2fd;
+    border: 2px solid var(--primary-blue);
+    box-shadow: 0 2px 6px rgba(33, 150, 243, 0.15);
+}
+
+.gk-card-name {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.gk-card-box.active .gk-card-name {
+    color: #0d47a1;
+}
+
+.gk-card-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.gk-card-stats strong {
+    color: var(--text-main);
+}

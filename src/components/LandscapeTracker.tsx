@@ -49,12 +49,11 @@ export const LandscapeTracker = ({
   const getHomeLabel = () => homeTeam || 'Roskilde Håndbold';
   const getAwayLabel = () => awayTeam || 'Modst.';
 
-  // Hent statistik for den aktive målmand (fallback til generelle stats hvis ingen er valgt)
   const activeStats = activeGoalkeeperId 
     ? getStatsForGk(activeGoalkeeperId) 
     : { ...stats, savePercentage, totalEfficiency };
 
-  const hasMultipleGoalkeepers = goalkeepers.length > 1;
+  const hasMultipleGoalkeepers = goalkeepers.length > 0;
 
   const renderControl = (type: Action, label: string, className: string, side: 'left' | 'right') => (
     <div className={`controls-grid ${side}-side-controls`}>
@@ -94,39 +93,11 @@ export const LandscapeTracker = ({
           </button>
         </div>
 
-        {/* Målmands-vælger knapper i toppen af midterpanelet i landscape (vises kun hvis der er flere målmænd) */}
-        {hasMultipleGoalkeepers && (
-          <div style={{ display: 'flex', gap: '4px', width: '100%' }}>
-            {goalkeepers.map(gk => {
-              const isSelected = activeGoalkeeperId === gk.id;
-              return (
-                <button
-                  key={gk.id}
-                  onClick={() => onSelectGk(gk.id)}
-                  style={{
-                    flex: 1,
-                    padding: '4px 6px',
-                    borderRadius: '6px',
-                    border: isSelected ? '1px solid #2196F3' : '1px solid #ddd',
-                    background: isSelected ? '#e3f2fd' : '#fff',
-                    color: isSelected ? '#0d47a1' : '#333',
-                    fontWeight: 'bold',
-                    fontSize: '0.7rem',
-                    cursor: 'pointer'
-                  }}
-                >
-                  🛡️ {gk.name} {isSelected ? '✓' : ''}
-                </button>
-              );
-            })}
-          </div>
-        )}
-
         <div className="landscape-score-display">
           <div className="score-box">
             <span className="score-label">{isFlipped ? getAwayLabel() : getHomeLabel()}</span>
             <span className="score-number">
-              {isFlipped ? (activeGkStats.goals || 0) : (stats.teamGoals || 0)}
+              {isFlipped ? (stats.goals || 0) : (stats.teamGoals || 0)}
             </span>
           </div>
 
@@ -135,7 +106,7 @@ export const LandscapeTracker = ({
           <div className="score-box">
             <span className="score-label">{isFlipped ? getHomeLabel() : getAwayLabel()}</span>
             <span className="score-number">
-              {isFlipped ? (stats.teamGoals || 0) : (activeGkStats.goals || 0)}
+              {isFlipped ? (stats.teamGoals || 0) : (stats.goals || 0)}
             </span>
           </div>
         </div>
@@ -147,41 +118,38 @@ export const LandscapeTracker = ({
           teamGoals={stats.teamGoals} 
         />
 
-        {/* BEGGE MÅLMÆND STATS OVER HINANDEN NEDE I BUNDEN (vises kun hvis der er flere målmænd) */}
+        {/* HVER MÅLMAND I STAKKET BOKS MED STØRRE TEKST OG SKUD FORBI */}
         {hasMultipleGoalkeepers && (
-          <div style={{ background: '#fff', padding: '6px 8px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-            <p style={{ margin: '0 0 4px 0', fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center' }}>
-              Målmænd Status (Hele Kampen)
-            </p>
-            {goalkeepers.map(gk => {
-              const gkSt = getStatsForGk(gk.id);
-              const isSelected = activeGoalkeeperId === gk.id;
-              return (
-                <div 
-                  key={gk.id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '2px 0',
-                    borderBottom: '1px solid #f5f5f5',
-                    fontSize: '0.7rem'
-                  }}
-                >
-                  <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#2196F3' : '#333' }}>
-                    {gk.name} {isSelected ? '(Aktiv)' : ''}
-                  </span>
-                  <span>
-                    Redn: <strong>{gkSt.saves}</strong> | Mål: <strong>{gkSt.goals}</strong> | %: <strong>{gkSt.savePercentage.toFixed(0)}%</strong>
-                  </span>
-                </div>
-              );
-            })}
+          <div className="gk-status-container-landscape">
+            <p className="gk-section-title-landscape">Målmænd Status</p>
+            <div className="gk-boxes-stack-landscape">
+              {goalkeepers.map(gk => {
+                const gkSt = getStatsForGk(gk.id);
+                const isSelected = activeGoalkeeperId === gk.id;
+                return (
+                  <div 
+                    key={gk.id}
+                    onClick={() => onSelectGk(gk.id)}
+                    className={`gk-card-box-landscape ${isSelected ? 'active' : ''}`}
+                  >
+                    <div className="gk-card-name-landscape">
+                      {isSelected ? '🛡️' : ''} {gk.name} {isSelected && '✓'}
+                    </div>
+                    <div className="gk-card-stats-landscape">
+                      <span>Redn: <strong>{gkSt.saves}</strong></span>
+                      <span>Mål: <strong>{gkSt.goals}</strong></span>
+                      <span>Forbi: <strong>{gkSt.missed}</strong></span>
+                      <span>%: <strong>{gkSt.savePercentage.toFixed(0)}%</strong></span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
         <div className="results-wrapper">
-          <MatchResults savePercentage={savePercentage} totalEfficiency={totalEfficiency} />
+          {/* <MatchResults savePercentage={savePercentage} totalEfficiency={totalEfficiency} /> */}
         </div>
       </div>
 

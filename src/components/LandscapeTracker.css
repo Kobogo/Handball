@@ -209,3 +209,70 @@
         display: none !important;
     }
 }
+
+/* --- MÅLMÅND STATUS BOKSE (LANDSCAPE LODRET STAK & STØRRE TEKST) --- */
+    .gk-status-container-landscape {
+        background: var(--white);
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .gk-section-title-landscape {
+        margin: 0 0 4px 0;
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .gk-boxes-stack-landscape {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .gk-card-box-landscape {
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .gk-card-box-landscape:hover {
+        border-color: var(--primary-blue);
+    }
+
+    .gk-card-box-landscape.active {
+        background: #e3f2fd;
+        border: 1.5px solid var(--primary-blue);
+    }
+
+    .gk-card-name-landscape {
+        font-weight: bold;
+        font-size: 0.8rem;
+        color: var(--text-main);
+        margin-bottom: 2px;
+        text-align: center;
+    }
+
+    .gk-card-box-landscape.active .gk-card-name-landscape {
+        color: #0d47a1;
+    }
+
+    .gk-card-stats-landscape {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 1rem;
+        color: var(--text-muted);
+    }
+
+    .gk-card-stats-landscape strong {
+        color: var(--text-main);
+    }
