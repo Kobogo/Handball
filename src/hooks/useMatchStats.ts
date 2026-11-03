@@ -117,7 +117,7 @@ export function useMatchStats() {
     const reconstructedHistory: ActionLog[] = [];
 
     if (match.goalkeepers && match.goalkeepers.length > 0) {
-      match.goalkeepers.for_each ? match.goalkeepers.forEach((gk: any) => {}) : null; // (sikkerhed)
+      match.goalkeepers.for_each ? match.goalkeepers.forEach(() => {}) : null; // (sikkerhed)
       
       // Løb igennem hver målmand og genskab deres redninger og mål imod
       match.goalkeepers.forEach((gk: any) => {

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { Action, Goalkeeper } from '../hooks/useMatchStats';
-import { MatchResults } from './MatchResults';
 import { StatsBoard } from './StatsBoard';
 import './LandscapeTracker.css';
 
@@ -32,7 +31,6 @@ interface Props {
 
 export const LandscapeTracker = ({
   stats,
-  activeGkStats,
   goalkeepers,
   activeGoalkeeperId,
   onSelectGk,

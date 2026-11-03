@@ -3,7 +3,6 @@ import { usePreventRefresh } from './hooks/usePreventRefresh';
 import { useMatchStats } from './hooks/useMatchStats';
 import { StatsBoard } from './components/StatsBoard';
 import { ActionButtons } from './components/ActionButtons';
-import { MatchResults } from './components/MatchResults';
 import { Modal } from './components/Modal';
 import { Navbar } from './components/Navbar';
 import HistoryPage from './components/HistoryPage';
