@@ -158,7 +158,9 @@ const HistoryPage = ({ onEdit, onDelete }: HistoryPageProps) => {
                             <div key={gk.gk_id} className="gk-history-row">
                               <span className="gk-history-name"> {gk.gk_name}</span>
                               <span className="gk-history-stats">
-                                Redn: <strong>{gk.saves}</strong> | Mål imod: <strong>{gk.goals_against}</strong> | Forbi: <strong>{gk.missed}</strong> | %: <strong className={gkPct >= 40 ? 'pct-high' : ''}>{gkPct.toFixed(1)}%</strong>
+                                <span className="stat-label">Redninger:</span> <span className="stat-value">{gk.saves}</span> | <span className="stat-label">Mål imod:</span> <span className="stat-value">{gk.goals_against}</span>  
+                                <br />
+                                <span className="stat-label">Forbi:</span> <span className="stat-value">{gk.missed}</span> | <span className="stat-label">Rednings %</span>: <span className={`stat-value ${gkPct >= 40 ? 'pct-high' : ''}`}>{gkPct.toFixed(1)}%</span>
                               </span>
                             </div>
                           );

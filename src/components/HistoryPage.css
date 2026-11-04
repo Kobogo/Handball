@@ -254,8 +254,3 @@
     font-weight: 600;
     color: var(--primary-dark);
 }
-
-.gk-history-stats {
-    color: var(--text-main);
-    font-size: 0.8rem;
-}
